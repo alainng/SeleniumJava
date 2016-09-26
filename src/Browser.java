@@ -10,6 +10,13 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.apache.commons.io.FileUtils;
+
 @SuppressWarnings("deprecation")
 public class Browser {
 
@@ -22,14 +29,31 @@ public class Browser {
 	}
 	
 	public Browser(){
+		//downloadDrivers("C:/Users/Milwy/Desktop/");
 		setupBrowserDriver();
-		wait = new WebDriverWait(driver, 30);
-        driver.get("http://www.google.com/");
+		
+		//wait = new WebDriverWait(driver, 30);
+        //driver.get("http://www.google.com/");
         //visit_forums();
 	}
 	
-	private void downloadDrivers(){
-		
+	private void downloadDrivers(String directory){
+		if(directory.compareTo("")==0) directory="C:/Users/Milwy/Desktop/";
+		try {
+			
+			FileUtils.copyURLToFile(new URL("https://chromedriver.storage.googleapis.com/2.24/chromedriver_win32.zip"), new File(directory+"chromedriver_win32.zip"));
+			FileUtils.copyURLToFile(new URL("https://github.com/mozilla/geckodriver/releases/download/v0.10.0/geckodriver-v0.10.0-win64.zip"), new File(directory+"geckodriver-v0.10.0-win64.zip"));
+			FileUtils.copyURLToFile(new URL("http://selenium-release.storage.googleapis.com/2.53/IEDriverServer_Win32_2.53.1.zip"), new File(directory+"IEDriverServer_Win32_2.53.1.zip"));
+
+			// TODO EDGEDOWNLOAD
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+		//TODO UNZIP FILES INTO JAVA DIR
+		System.out.println("Done prinnting");
 	}
 	
 	private void setupBrowserDriver(){
@@ -54,7 +78,7 @@ public class Browser {
 			}
 			break;		
 		case 4:
-			//http://www.seleniumhq.org/download/
+			//http://selenium-release.storage.googleapis.com/2.53/IEDriverServer_Win32_2.53.1.zip
 			System.setProperty("webdriver.ie.driver", "C:/Users/Milwy/githubStuff/SeleniumTest/drivers/IEDriverServer.exe");
 			driver = new InternetExplorerDriver();
 			break;
