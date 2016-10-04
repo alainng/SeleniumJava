@@ -75,6 +75,7 @@ public class Browser {
 		case 3:
 			//https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 			if(OSValidator.getOS().compareTo("windows 10")==0){
+				//TODO EDGE IS FUCKED
 				System.out.println("I'm win10");
 				System.setProperty("webdriver.edge.driver", "C:/Users/Milwy/githubStuff/SeleniumTest/drivers/MicrosoftWebDriver.exe");
 				driver = new EdgeDriver();
