@@ -90,23 +90,33 @@ public class Browser {
 	
 	private static void visit_forums(){
 		driver.get("http://boards.pbe.leagueoflegends.com/en/c/bugs");
-		List <WebElement> rootElement = driver.findElements(By.xpath("//tbody[@id='discussion-list']//tr[@class='discussion-list-item row  ']"));
-		
-		ArrayList<String> titles= new ArrayList<String>();
-		for(int i=0; i<rootElement.size();i++){
-			WebElement threadElement= rootElement.get(i).findElement(By.xpath(".//td[@class='title']//div[@class='discussion-title opaque']//a[@class='title-link']"));
-			String title = threadElement.getText();
-			String URL = threadElement.getAttribute("href");
-			String post = threadElement.findElement(By.xpath(".//span[@class='title-span']")).getAttribute("title");
-			
-			titles.add(threadElement.getText());
-		}
+//		List <WebElement> discussionElements = driver.findElements(By.xpath("//tbody[@id='discussion-list']//tr[@class='discussion-list-item row  ']"));
+//		
+//		ArrayList<String> titles= new ArrayList<String>();
+//		for(int i=0; i<discussionElements.size();i++){
+//			WebElement threadElement= discussionElements.get(i).findElement(By.xpath(".//td[@class='title']//div[@class='discussion-title opaque']//a[@class='title-link']"));
+//			String title = threadElement.getText();
+//			String URL = threadElement.getAttribute("href");
+//			String post = threadElement.findElement(By.xpath(".//span[@class='title-span']")).getAttribute("title");
+//			
+//			titles.add(threadElement.getText());
+//		}
 		
 //		WebElement test2 = rootElement.get(0).findElement(By.xpath(".//td[@class='title']//div[@class='discussion-title opaque']//a[@class='title-link']"));
 //		System.out.println("data: " + test2.findElement(By.xpath(".//span[@class='title-span']")).getAttribute("title"));
 //		System.out.println("URL: "+test2.getAttribute("href"));
 		
 		//System.out.println(test2.getText());
+		
+		driver.findElement(By.xpath("//a[@class='box show-more']")).click();
+		try{
+			Thread.sleep(2500);
+		
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		List <WebElement> discussionElements = driver.findElements(By.xpath("//tbody[@id='discussion-list']//tr[@class='discussion-list-item row  ']"));
+		System.out.println(discussionElements.size());
 	}
 
 }
