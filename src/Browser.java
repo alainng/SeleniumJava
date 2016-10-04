@@ -94,12 +94,18 @@ public class Browser {
 		
 		ArrayList<String> titles= new ArrayList<String>();
 		for(int i=0; i<rootElement.size();i++){
-			WebElement titleText= rootElement.get(i).findElement(By.xpath(".//td[@class='title']//div[@class='discussion-title opaque']//a[@class='title-link']"));
-			titles.add(titleText.getText());
-			System.out.println(titleText.getText());
+			WebElement threadElement= rootElement.get(i).findElement(By.xpath(".//td[@class='title']//div[@class='discussion-title opaque']//a[@class='title-link']"));
+			String title = threadElement.getText();
+			String URL = threadElement.getAttribute("href");
+			String post = threadElement.findElement(By.xpath(".//span[@class='title-span']")).getAttribute("title");
+			
+			titles.add(threadElement.getText());
 		}
 		
-		//WebElement test2 = rootElement.get(46).findElement(By.xpath(".//td[@class='title']//div[@class='discussion-title opaque']//a[@class='title-link']"));
+//		WebElement test2 = rootElement.get(0).findElement(By.xpath(".//td[@class='title']//div[@class='discussion-title opaque']//a[@class='title-link']"));
+//		System.out.println("data: " + test2.findElement(By.xpath(".//span[@class='title-span']")).getAttribute("title"));
+//		System.out.println("URL: "+test2.getAttribute("href"));
+		
 		//System.out.println(test2.getText());
 	}
 
