@@ -1,5 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,13 +15,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
 @SuppressWarnings("deprecation")
 public class Browser {
 
-	private static int whichBrowser = 2; //1 chrome, 2 ff, 3 edge, 4 IE 
+	private static int whichBrowser = 1; //1 chrome, 2 ff, 3 edge, 4 IE 
 	private static WebDriver driver;
 	private static Wait<WebDriver> wait;
 
@@ -32,9 +35,9 @@ public class Browser {
 		//downloadDrivers("C:/Users/Milwy/Desktop/");
 		setupBrowserDriver();
 		
-		//wait = new WebDriverWait(driver, 30);
-        //driver.get("http://www.google.com/");
-        //visit_forums();
+		wait = new WebDriverWait(driver, 30);
+        driver.get("http://www.google.com/");
+        visit_forums();
 	}
 	
 	private void downloadDrivers(String directory){
@@ -87,8 +90,17 @@ public class Browser {
 	
 	private static void visit_forums(){
 		driver.get("http://boards.pbe.leagueoflegends.com/en/c/bugs");
-		//class="discussion-list-item row  "
-		System.out.println(driver.findElements(By.className("discussion-list-item row  ")).get(0).getText());
+		List <WebElement> rootElement = driver.findElements(By.xpath("//tbody[@id='discussion-list']//tr[@class='discussion-list-item row  ']"));
+		
+		ArrayList<String> titles= new ArrayList<String>();
+		for(int i=0; i<rootElement.size();i++){
+			WebElement titleText= rootElement.get(i).findElement(By.xpath(".//td[@class='title']//div[@class='discussion-title opaque']//a[@class='title-link']"));
+			titles.add(titleText.getText());
+			System.out.println(titleText.getText());
+		}
+		
+		//WebElement test2 = rootElement.get(46).findElement(By.xpath(".//td[@class='title']//div[@class='discussion-title opaque']//a[@class='title-link']"));
+		//System.out.println(test2.getText());
 	}
 
 }
