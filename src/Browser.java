@@ -23,7 +23,7 @@ import org.apache.commons.io.FileUtils;
 @SuppressWarnings("deprecation")
 public class Browser {
 
-	private static int whichBrowser = 1; //1 chrome, 2 ff, 3 edge, 4 IE 
+	private static int whichBrowser = 2; //1 chrome, 2 ff, 3 edge, 4 IE 
 	private static WebDriver driver;
 	private static Wait<WebDriver> wait;
 
@@ -38,6 +38,8 @@ public class Browser {
 		wait = new WebDriverWait(driver, 30);
         driver.get("http://www.google.com/");
         visit_forums();
+        browser_sleep(3);
+        browser_close();
 	}
 	
 	private void downloadDrivers(String directory){
@@ -63,27 +65,26 @@ public class Browser {
 		switch (whichBrowser){
 		case 1:
 			//https://sites.google.com/a/chromium.org/chromedriver/downloads
-			System.setProperty("webdriver.chrome.driver", "C:/Users/Milwy/githubStuff/SeleniumTest/drivers/chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", "C:/Users/Milwy/git/SeleniumJava/drivers/chromedriver.exe");
 			driver = new ChromeDriver();
 			break;
 		case 2:
 			//https://github.com/mozilla/geckodriver/releases/tag/v0.10.0
-			System.setProperty("webdriver.gecko.driver", "C:/Users/Milwy/githubStuff/SeleniumTest/drivers/geckodriver.exe");
+			System.setProperty("webdriver.gecko.driver", "C:/Users/Milwy/git/SeleniumJava/drivers/geckodriver.exe");
 			driver = new MarionetteDriver();
 			//add gecko driver for 48+
 			break;		
 		case 3:
 			//https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 			if(OSValidator.getOS().compareTo("windows 10")==0){
-				//TODO EDGE IS FUCKED
 				System.out.println("I'm win10");
-				System.setProperty("webdriver.edge.driver", "C:/Users/Milwy/githubStuff/SeleniumTest/drivers/MicrosoftWebDriver.exe");
+				System.setProperty("webdriver.edge.driver", "C:/Users/Milwy/git/SeleniumJava/drivers/MicrosoftWebDriver.exe");
 				driver = new EdgeDriver();
 			}
 			break;		
 		case 4:
 			//http://selenium-release.storage.googleapis.com/2.53/IEDriverServer_Win32_2.53.1.zip
-			System.setProperty("webdriver.ie.driver", "C:/Users/Milwy/githubStuff/SeleniumTest/drivers/IEDriverServer.exe");
+			System.setProperty("webdriver.ie.driver", "C:/Users/Milwy/git/SeleniumJava/drivers/IEDriverServer.exe");
 			driver = new InternetExplorerDriver();
 			break;
 		}
@@ -115,6 +116,20 @@ public class Browser {
 			titles.add(threadElement.getText());
 		}
 		
+	}
+	
+	private void browser_sleep(int time){
+		try{
+			Thread.sleep(1000*time);
+		}
+		catch (Exception e){
+			System.out.println(e);
+		}
+	}
+	
+	private void browser_close(){
+		driver.close();
+		driver.quit(); //firefox needs this
 	}
 
 }
